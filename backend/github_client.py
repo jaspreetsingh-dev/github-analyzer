@@ -11,6 +11,12 @@ def get_user_profile(username):
     response = requests.get(url, headers=headers).json()
     return response
 
+def get_repositories(username):
+    url = f"https://api.github.com/users/{username}/repos"
+    headers = {"Authorization": f"token {GITHUB_TOKEN}"}
+    params = {"per_page": 100}
+    response = requests.get(url, headers=headers, params=params).json()
+    return response
 
 
 
