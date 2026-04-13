@@ -15,15 +15,20 @@ document.getElementById("analyze-btn").addEventListener("click", function(){
     fetch(`http://127.0.0.1:5000/analyze/${username}`)
         .then(response => response.json())
         .then(data => {
-            document.getElementById("results").innerHTML = `
-                <h2>${data.summary}</h2>
-                <p>⭐ Total Stars: ${data.stats.total_stars}</p>
-                <p>🍴 Total Forks: ${data.stats.total_forks}</p>
-                <p>📊 Codex Score: ${data.codex_score}/100</p>
-                <p>🌐 Languages: ${Object.keys(data.stats.languages).join(", ")}</p>
-`
-        })
+            if(data.error) {
+                document.getElementById("results").innerHTML = `<p>Error: ${data.error}</p>`
+            } else {
+                document.getElementById("results").innerHTML = `
+                    <h2>${data.summary}</h2>
+                    <p>⭐ Total Stars: ${data.stats.total_stars}</p>
+                    <p>🍴 Total Forks: ${data.stats.total_forks}</p>
+                    <p>📊 Codex Score: ${data.codex_score}/100</p>
+                    <p>🌐 Languages: ${Object.keys(data.stats.languages).join(", ")}</p>
+        `
+    }
 })
+        })
+
 </script>
 
 </body>

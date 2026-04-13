@@ -1,4 +1,3 @@
-
 def calculate_basic_stats(repos):
     total_stars = 0
     total_forks = 0

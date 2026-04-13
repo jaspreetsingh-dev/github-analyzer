@@ -1,4 +1,4 @@
-from flask import Flask, jsonify, request, send_from_directory
+from flask import Flask, jsonify, send_from_directory
 from flask_cors import CORS
 from github_client import get_user_profile, get_repositories
 from analyzer import calculate_codex_score, calculate_basic_stats
