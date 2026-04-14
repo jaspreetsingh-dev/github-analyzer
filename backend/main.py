@@ -2,7 +2,7 @@ from flask import Flask, jsonify, send_from_directory
 from flask_cors import CORS
 from github_client import get_user_profile, get_repositories
 from analyzer import calculate_codex_score, calculate_basic_stats
-from summarizer import generate_summary
+from summarizer import generate_summary, generate_badges
 
 app = Flask(__name__)
 CORS(app)
@@ -23,12 +23,14 @@ def analyze_username(username):
         stats = calculate_basic_stats(repos)
         codex_score = calculate_codex_score(profile, repos)
         summary = generate_summary(profile, repos, stats, codex_score)
+        badges = generate_badges(profile, stats)
 
         return jsonify({
             "profile": profile,
             "stats": stats,
             "codex_score": codex_score,
-            "summary": summary
+            "summary": summary,
+            "badges": badges
         })
     
     except Exception as e:

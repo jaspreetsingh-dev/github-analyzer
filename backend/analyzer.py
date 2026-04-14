@@ -18,6 +18,8 @@ def calculate_basic_stats(repos):
     }
 
 def calculate_codex_score(profile, repos):
+    if len(repos) == 0:
+        return 0
     total_repos = len(repos)
     total_stars = sum(repo["stargazers_count"] for repo in repos)
     total_forks = sum(repo["forks_count"] for repo in repos if repo["language"])
