@@ -10,8 +10,11 @@ def get_star_tier(total_stars):
     else:
         return "top 1% on Github"
     
+from datetime import datetime
+
 def get_account_age(created_at):
-    age = 2026 - int(created_at[:4])
+    current_year = datetime.now().year
+    age = current_year - int(created_at[:4])
     if age < 2:
         return "relatively new to Github"
     elif age < 5:
@@ -23,7 +26,7 @@ def get_account_age(created_at):
 
 def generate_summary(profile, repos, stats, codex_score):
     name = profile["login"]
-    top_language = max(stats["languages"], key=stats["languages"].get)
+    top_language = max(stats["languages"], key=stats["languages"].get) if stats["languages"] else "unknown"
     total_repos = len(repos)
     tier = get_star_tier(stats["total_stars"])
     age_label = get_account_age(profile["created_at"])

@@ -4,6 +4,9 @@ from github_client import get_user_profile, get_repositories
 from analyzer import calculate_codex_score, calculate_basic_stats
 from summarizer import generate_summary, generate_badges
 
+import logging
+logging.basicConfig(level=logging.INFO)
+
 app = Flask(__name__)
 CORS(app)
 
@@ -17,7 +20,11 @@ def analyze_username(username):
         profile = get_user_profile(username)
 
         if "message" in profile:
+            if profile["message"] == "API rate limit exceeded":
+                return jsonify({"error": "GitHub API rate limit exceeded. Try again in an hour."}), 429
             return jsonify({"error": "Username not found"}), 404
+        
+        logging.info(f"Analyzing: {username}")
         
         repos = get_repositories(username)
         stats = calculate_basic_stats(repos)
@@ -39,8 +46,13 @@ def analyze_username(username):
 @app.route("/compare/<username1>/<username2>")
 def compare_users(username1, username2):
     try:
+        if username1.lower() == username2.lower():
+            return jsonify({"error": "Please enter two different usernames"}), 400
+
         profile = get_user_profile(username1)
         if "message" in profile:
+            if profile["message"] == "API rate limit exceeded":
+                return jsonify({"error": "GitHub API rate limit exceeded. Try again in an hour."}), 429
             return jsonify({"error": "Username not found"}), 404
         
         repos = get_repositories(username1)
