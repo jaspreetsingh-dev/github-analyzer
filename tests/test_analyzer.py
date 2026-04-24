@@ -31,3 +31,13 @@ def test_codex_score_empty_repos():
     print("all tests passed")
 
 test_codex_score_empty_repos()
+
+from summarizer import get_star_tier, get_account_age
+def test_get_star_tier():
+    assert get_star_tier(0) == "emerging developer"
+    assert get_star_tier(50000) == "top 1% on Github"
+    assert get_star_tier(500) == "recognised developer"
+
+    print("all tests passed")
+
+test_get_star_tier()
