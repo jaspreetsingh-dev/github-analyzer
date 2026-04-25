@@ -28,7 +28,7 @@ def test_codex_score_empty_repos():
     result = calculate_codex_score(fake_profile, [])
     assert result == 0
 
-    print("all tests passed")
+    print("All tests passed")
 
 test_codex_score_empty_repos()
 
@@ -38,6 +38,14 @@ def test_get_star_tier():
     assert get_star_tier(50000) == "top 1% on Github"
     assert get_star_tier(500) == "recognised developer"
 
-    print("all tests passed")
+    print("All tests passed")
 
 test_get_star_tier()
+
+def test_get_account_age():
+    assert get_account_age("2010-01-01T00:00:00Z") == "veteran of the community"
+    assert get_account_age("2024-01-01T00:00:00Z") == "relatively new to Github"
+
+    print("All tests passed")
+
+test_get_account_age()

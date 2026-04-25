@@ -15,9 +15,9 @@ from datetime import datetime
 def get_account_age(created_at):
     current_year = datetime.now().year
     age = current_year - int(created_at[:4])
-    if age < 2:
+    if age <= 2:
         return "relatively new to Github"
-    elif age < 5:
+    elif age <= 5:
         return "experienced developer"
     else:
         return "veteran of the community" 
