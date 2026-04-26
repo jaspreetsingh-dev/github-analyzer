@@ -14,6 +14,14 @@ CORS(app)
 def index():
     return send_from_directory("../frontend", "index.html")
 
+@app.route("/v2")
+def index_v2():
+    return send_from_directory("../frontend", "index_v2.html")
+
+@app.route("/frontend/<path:filename>")
+def frontend_files(filename):
+    return send_from_directory("../frontend", filename)
+
 @app.route("/analyze/<username>")
 def analyze_username(username):
     try:
