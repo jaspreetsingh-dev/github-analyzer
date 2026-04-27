@@ -8,42 +8,37 @@ body {
     font-family: 'Geist Mono', monospace;
     background-color: #f0f0f0;
     color: #1a1a18;
-    max-width: 800px;
+    max-width: 900px;
     margin: 0 auto;
-    padding: 40px 20px;
+    padding:  40px 20px;
 }
 
 nav {
-    margin-bottom: 60px;
+    margin-bottom: 48px;
     font-size: 12px;
-    letter-spacing: 0.1em;
     color: #888;
 }
 
-.hero {
-    margin-bottom: 48px;
-}
-
-.hero img {
-    width: 380px;
-    max-width: 100%;
-    display: block;
-    margin: 0 auto 24px auto;
+.site-title {
+    font-size: 36px;
+    font-weight: 700;
+    margin-bottom: 12px;
 }
 
 .tagline {
     font-size: 13px;
     color: #666;
-    margin-bottom: 32px;
     font-weight: 300;
+    margin-bottom: 32px;
 }
 
 .input-row {
     display: flex;
     gap: 8px;
+    margin-bottom: 12px;
 }
 
-#username-input {
+input {
     flex: 1;
     padding: 10px 14px;
     font-family: 'Geist Mono', monospace;
@@ -53,7 +48,7 @@ nav {
     outline: none;
 }
 
-#analyze-btn {
+button {
     padding: 10px 20px;
     font-family: 'Geist Mono', monospace;
     font-size: 13px;
@@ -67,14 +62,6 @@ nav {
 .hint {
     font-size: 11px;
     color: #999;
-    margin-top: 10px;
-}
-
-.site-title {
-    font-size: 32px;
-    font-weight: 700;
-    letter-spacing: -0.02em;
-    margin-bottom: 12px;
 }
 
 .results-card {
@@ -82,25 +69,4 @@ nav {
     border: 1px solid #ccc;
     padding: 24px;
     margin-top: 16px;
-}
-
-#compare-input {
-    flex: 1;
-    padding: 10px 14px;
-    font-family: 'Geist Mono', monospace;
-    font-size: 13px;
-    border: 1px solid #ccc;
-    background: white;
-    outline: none;
-}
-
-#compare-btn {
-    padding: 10px 20px;
-    font-family: 'Geist Mono', monospace;
-    font-size: 13px;
-    font-weight: 600;
-    border: 1px solid #1a1a18;
-    background: #1a1a18;
-    color: white;
-    cursor: pointer;
 }

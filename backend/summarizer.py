@@ -31,7 +31,7 @@ def generate_summary(profile, repos, stats, codex_score):
     tier = get_star_tier(stats["total_stars"])
     age_label = get_account_age(profile["created_at"])
 
-    return f"{name} is a {tier} and a {age_label} with {total_repos} public repositories, primarily working in {top_language}. their Codex Score is ({codex_score}/100)"
+    return f"A {tier} and a {age_label} with {total_repos} public repositories, primarily working in {top_language}."
 
 def generate_badges(profile, stats):
     badges = []

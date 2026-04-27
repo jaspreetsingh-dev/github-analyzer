@@ -16,9 +16,11 @@
 </nav>
 <section class="hero">
     <h1 class="site-title">Github Analyzer</h1>
-    <h1 class="tagline">A mirror for your GitHub. Brutally honest. Occasionally apologetic.</h1>
+    <p class="tagline">A mirror for your GitHub. Brutally honest. Occasionally apologetic.</p
+        >
     <div class="input-row">
-        <input type="text" placeholder="enter username" id="username-input">
+        <input type="text" placeholder="enter first username" id="username-input">
+        <input type="text" placeholder="enter second username" id="username2-input">
         <button id="analyze-btn">Analyze</button>
     </div>
     <p class="hint">// try: torvalds, gvanrossum, sindresorhus</p>
@@ -28,74 +30,57 @@
 <script>
     document.getElementById("analyze-btn").addEventListener("click", function() {
         const username = document.getElementById("username-input").value.trim()
+        const username2 = document.getElementById("username2-input").value.trim()
+
         if (username === "") {
-            document.getElementById("results").innerHTML = "<p>Please enter a username</p>"
+            document.getElementById("results").innerHTML = "<p>Please enter the first username</p>"
+            return
+        }
+        if (username2 === "") {
+            document.getElementById("results").innerHTML = "<p>Please enter the second username</p>"
             return 
         }
-        document.getElementById("results").innerHTML = "<p>Analyzing....</p>"
-        fetch(`http://127.0.0.1:5000/analyze/${username}`)
+
+        document.getElementById("results").innerHTML = `<p>Analyzing ${username} and ${username2}... this takes a few seconds</p>`
+
+        fetch(`/compare/${username}/${username2}`)
             .then(response => response.json())
             .then(data => {
                 if (data.error) {
                     document.getElementById("results").innerHTML = `<p>${data.error}</p>`
                 } else {
+                    const loser = data.winner === username ? username2 : username
                     document.getElementById("results").innerHTML = `
-                        <div class="results-card">
-                            <img src="${data.profile.avatar_url}" width="80">
-                            <h2>${data.profile.login}</h2>
-                            <p>${data.summary}</p>
-                        </div>
-                        <div class="results-card">
-                            <p>Codex Score: ${data.codex_score} / 100</p>
-                            <p>⭐ Stars: ${data.stats.total_stars}</p>
-                            <p>🍴 Forks: ${data.stats.total_forks}</p>
-                            <p>👥 Followers: ${data.profile.followers}</p>
-                        </div>
-                        <div class="results-card">
-                            <p>Badges: ${data.badges.join(", ")}</p>
-                            <p>Languages: ${Object.keys(data.stats.languages).join(", ")}</p>
-                        </div>
-                        <div class="result-card">
-                            <p>// compare with another developer</p>
-                            <div class="input-row">
-                                <input type="text" id="compare-input" placeholder="enter second username">
-                                <button id="compare-btn">Compare</button>
-                            </div>
-                        </div>
+                    <div class="results-card">
+                        <h1>${data.user1.profile.name || data.user1.profile.login}</h1>
+                        <p>${data.user1.summary}</p>
+                        <p>📊 Codex Score: ${data.user1.codex_score} / 100</p>
+                        <p>⭐ Stars: ${data.user1.stats.total_stars}</p>
+                        <p>🍴 Forks: ${data.user1.stats.total_forks}</p>
+                        <p>👥 Followers: ${data.user1.profile.followers}</p>
+                        <p>📁 Repos: ${data.user1.profile.public_repos}</p>
+                        <p>💻Languages: ${Object.keys(data.user1.stats.languages).join(", ")}</p>
+                        <p>${data.user1.badges.join(", ")}</p>
+                    </div>
+                    <div class="results-card">
+                        <h1>${data.user2.profile.name || data.user2.profile.login}</h1>
+                        <p>${data.user2.summary}</p>
+                        <p>📊 Codex Score: ${data.user2.codex_score} / 100</p>
+                        <p>⭐ Stars: ${data.user2.stats.total_stars}</p>
+                        <p>🍴 Forks: ${data.user2.stats.total_forks}</p>
+                        <p>👥 Followers: ${data.user2.profile.followers}</p>
+                        <p>📁 Repos: ${data.user2.profile.public_repos}</p>
+                        <p>💻 Languages: ${Object.keys(data.user2.stats.languages).join(", ")}</p>
+                        <p>${data.user2.badges.join(", ")}</p>
+                    </div>
+                    <div class="results-card">    
+                        <p>🏆 ${data.winner} wins.</p>
+                        <p>Sorry ${loser}. The algorithm has spoken. No appeals accepted.</p>
+                    </div>
                     `
-
-                    document.getElementById("compare-btn").addEventListener("click", function() {
-                        const username2 = document.getElementById("compare-input").value.trim()
-                        if (username2 === "") {
-                            document.getElementById("results").innerHTML = "<p>Please enter a second username</p>"
-                            return 
-                        }
-                        document.getElementById("results").innerHTML = "<p>Analyzing....</p>"
-                        fetch(`http://127.0.0.1:5000/compare/${username}/${username2}`)
-                            .then(response => response.json())
-                            .then(compareData => {
-                                document.getElementById("results").innerHTML = `
-                                    <div class="result-card">
-                                        <h2>${compareData.user1.profile.login}</h2>
-                                        <p>${compareData.user1.summary}</p>
-                                        <p>Codex Score: ${compareData.user1.codex_score}</p>
-                                    </div> 
-                                    <div class="result-card">
-                                        <h2>${compareData.user2.profile.login}</h2>
-                                        <p>${compareData.user2.summary}</p>
-                                        <p>Codex Score: ${compareData.user2.codex_score}</p>
-                                    </div>      
-                                    <div class="result-card">
-                                        <p>🏆 Winner: ${compareData.winner}</p>
-                                    </div>
-                                `
-                            })
-                    })
                 }
             })
     })
-
 </script>
-
 </body>
 </html>
