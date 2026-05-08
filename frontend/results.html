@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Results — GitHub Analyzer</title>
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=Cormorant+Garamond:ital,wght@0,300;0,600;1,300&family=Inter:wght@300;400;500&display=swap"
+    rel="stylesheet"
+  />
+
+  <link rel="stylesheet" href="/frontend/results.css" />
+</head>
+
+<body>
+
+  <div class="flower-bg"></div>
+
+  <main class="page" id="results-page">
+    <a href="/" class="back-btn">
+  ⮜ another analysis
+</a>
+    <!-- SCORE ROW -->
+
+    <div class="score-row">
+
+      <div class="score-block">
+        <a class="score-name" id="user1-name" href="#" target="_blank">user1</a>
+        <p class="score-number" id="user1-score">0</p>
+      </div>
+
+      <div class="score-vs">vs</div>
+
+      <div class="score-block">
+        <a class="score-name" id="user2-name" href="#" target="_blank">user1</a>
+        <p class="score-number" id="user2-score">0</p>
+      </div>
+    </div>
+
+    <!-- VERDICT -->
+
+    <div class="verdict-box">
+
+      <p class="verdict-line">
+
+        <span class="verdict-winner" id="winner-text">
+          WINNER WON.
+        </span>
+
+        <span class="verdict-sorry" id="winner-message">
+          comparing developers again. tragic.
+        </span>
+
+      </p>
+
+    </div>
+
+    <!-- CARDS -->
+
+    <div class="cards-row">
+
+      <!-- CARD 1 -->
+
+      <div class="card" id="card1">
+
+        <div class="card-header">
+
+          <img
+            class="card-avatar"
+            id="avatar1"
+            src=""
+            alt=""
+          />
+
+          <div class="card-header-text">
+
+            <h2
+              class="card-username"
+              id="card1-username"
+            >
+              username
+            </h2>
+
+            <p
+              class="card-title"
+              id="card1-title"
+            >
+              0 repos · language
+            </p>
+
+          </div>
+
+        </div>
+
+        <p
+          class="card-summary"
+          id="summary1"
+        ></p>
+
+        <div class="card-divider"></div>
+
+        <div class="card-stats">
+
+          <div class="stat">
+            <span class="stat-label">stars</span>
+            <span class="stat-value" id="stars1">0</span>
+          </div>
+
+          <div class="stat">
+            <span class="stat-label">forks</span>
+            <span class="stat-value" id="forks1">0</span>
+          </div>
+
+          <div class="stat">
+            <span class="stat-label">followers</span>
+            <span class="stat-value" id="followers1">0</span>
+          </div>
+
+          <div class="stat">
+            <span class="stat-label">repos</span>
+            <span class="stat-value" id="repos1">0</span>
+          </div>
+
+        </div>
+
+        <div class="card-divider"></div>
+
+        <div class="card-languages">
+
+          <span class="lang-label">
+            languages
+          </span>
+
+          <span
+            class="lang-list"
+            id="languages1"
+          ></span>
+
+        </div>
+
+        <div
+          class="card-badges"
+          id="badges1"
+        ></div>
+
+      </div>
+
+      <!-- CARD 2 -->
+
+      <div class="card" id="card2">
+
+        <div class="card-header">
+
+          <img
+            class="card-avatar"
+            id="avatar2"
+            src=""
+            alt=""
+          />
+
+          <div class="card-header-text">
+
+            <h2
+              class="card-username"
+              id="card2-username"
+            >
+              username
+            </h2>
+
+            <p
+              class="card-title"
+              id="card2-title"
+            >
+              0 repos · language
+            </p>
+
+          </div>
+
+        </div>
+
+        <p
+          class="card-summary"
+          id="summary2"
+        ></p>
+
+        <div class="card-divider"></div>
+
+        <div class="card-stats">
+
+          <div class="stat">
+            <span class="stat-label">stars</span>
+            <span class="stat-value" id="stars2">0</span>
+          </div>
+
+          <div class="stat">
+            <span class="stat-label">forks</span>
+            <span class="stat-value" id="forks2">0</span>
+          </div>
+
+          <div class="stat">
+            <span class="stat-label">followers</span>
+            <span class="stat-value" id="followers2">0</span>
+          </div>
+
+          <div class="stat">
+            <span class="stat-label">repos</span>
+            <span class="stat-value" id="repos2">0</span>
+          </div>
+
+        </div>
+
+        <div class="card-divider"></div>
+
+        <div class="card-languages">
+
+          <span class="lang-label">
+            languages
+          </span>
+
+          <span
+            class="lang-list"
+            id="languages2"
+          ></span>
+
+        </div>
+
+        <div
+          class="card-badges"
+          id="badges2"
+        ></div>
+
+      </div>
+
+    </div>
+
+  </main>
+
+  <script src="/frontend/results.js"></script>
+
+</body>
+
+</html>

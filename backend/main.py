@@ -27,7 +27,7 @@ def analyze_username(username):
     try:
         profile = get_user_profile(username)
 
-        if "message" in profile:
+        if profile.get("message") == "Not Found":
             if profile["message"] == "API rate limit exceeded":
                 return jsonify({"error": "GitHub API rate limit exceeded. Try again in an hour."}), 429
             return jsonify({"error": "Username not found"}), 404
@@ -58,7 +58,7 @@ def compare_users(username1, username2):
             return jsonify({"error": "Please enter two different usernames"}), 400
 
         profile = get_user_profile(username1)
-        if "message" in profile:
+        if profile.get("message") == "Not Found":
             if profile["message"] == "API rate limit exceeded":
                 return jsonify({"error": "GitHub API rate limit exceeded. Try again in an hour."}), 429
             return jsonify({"error": "Username not found"}), 404
@@ -70,7 +70,7 @@ def compare_users(username1, username2):
         badges = generate_badges(profile, stats)
 
         profile2 = get_user_profile(username2)
-        if "message" in profile2:
+        if profile2.get("message") == "Not Found":
             return jsonify({"error": "Username not found"}), 404
         
         repos2 = get_repositories(username2)

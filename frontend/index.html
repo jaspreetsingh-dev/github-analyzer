@@ -1,40 +1,103 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<title>github Analyzer</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>GitHub Analyzer</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=Cormorant+Garamond:ital,wght@0,300;0,600;1,300&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/frontend/style.css" />
 </head>
 <body>
-    <h1>Github Profile Analyzer</h1>
-    <input placeholder="username" id="username-input">
-    <button id="analyze-btn">Analyze</button>
-    <div id="results"></div>
+
+  <section class="hero">
+
+    <div class="flower-bg"></div>
+
+    <div class="hero-inner">
+
+<div class="heading-wrap">
+  <h1 class="heading">GITHUB<br>ANALYZER</h1>
+</div>
+
+      <div class="center">
+        <p class="subheading">to compare — what if you actually committed on github<br/>instead of comparing yourself. so insecure.</p>
+
+        <div class="inputs">
+          <div class="input-group">
+            <input type="text" id="user1" placeholder="first username" autocomplete="off" />
+          </div>
+          <span class="vs">vs</span>
+          <div class="input-group">
+            <input type="text" id="user2" placeholder="second username" autocomplete="off" />
+          </div>
+        </div>
+
+        <button class="analyze-btn" id="analyze-btn">decide ⮞</button>
+        <p id="error-message"></p>
+        <p id="status-text"></p>
+      </div>
+
+    </div>
+
+  </section>
 
 <script>
-document.getElementById("analyze-btn").addEventListener("click", function(){
-    const username = document.getElementById("username-input").value
-    if(username.trim() === "") {
-        document.getElementById("results").innerHTML = "<p>Please enter a username</P>"
+
+document.getElementById("analyze-btn")
+  .addEventListener("click", async function () {
+
+    const user1 =
+      document.getElementById("user1").value.trim()
+
+    const user2 =
+      document.getElementById("user2").value.trim()
+
+    const errorBox =
+      document.getElementById("error-message")
+
+    errorBox.textContent = ""
+
+    if (user1 === "" || user2 === "") {
+
+      errorBox.textContent =
+        "please enter both usernames"
+
+      return
+    }
+
+    // ANALYZING STATE
+    errorBox.textContent =
+      "analyzing github history..."
+
+    try {
+
+      const response = await fetch(
+        `http://127.0.0.1:5000/compare/${user1}/${user2}`
+      )
+
+      const data = await response.json()
+
+      if (data.error) {
+
+        errorBox.textContent =
+          data.error
+
         return
+      }
+
+      window.location.href =
+        `/frontend/results.html?user1=${user1}&user2=${user2}`
+
+    } catch (error) {
+
+      console.error(error)
+
+      errorBox.textContent =
+        "server unavailable"
+
     }
-    document.getElementById("results").innerHTML = "<p>Analyzing....</p>"
-    fetch(`http://127.0.0.1:5000/analyze/${username}`)
-        .then(response => response.json())
-        .then(data => {
-            if(data.error) {
-                document.getElementById("results").innerHTML = `<p>Error: ${data.error}</p>`
-            } else {
-                document.getElementById("results").innerHTML = `
-                    <img src="${data.profile.avatar_url}" width="100" height="100">
-                    <h2>${data.summary}</h2>
-                    <p>⭐ Total Stars: ${data.stats.total_stars}</p>
-                    <p>🍴 Total Forks: ${data.stats.total_forks}</p>
-                    <p>📊 Codex Score: ${data.codex_score}/100</p>
-                    <p>🌐 Languages: ${Object.keys(data.stats.languages).join(", ")}</p>
-                    <p>🎖️ Badges: ${data.badges.join(", ")}</p>
-        `
-    }
+
 })
-        })
 
 </script>
 
