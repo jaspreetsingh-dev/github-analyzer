@@ -84,6 +84,10 @@ document.getElementById("analyze-btn")
 
         return
       }
+      sessionStorage.setItem(
+        "comparisonData",
+        JSON.stringify(data)
+      )
 
       window.location.href =
         `/frontend/results.html?user1=${user1}&user2=${user2}`

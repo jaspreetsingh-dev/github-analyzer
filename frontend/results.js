@@ -1,101 +1,76 @@
-const params = new URLSearchParams(window.location.search)
+const savedData =
+  sessionStorage.getItem("comparisonData")
 
-const user1 = params.get("user1")
-const user2 = params.get("user2")
+if (!savedData) {
 
-fetch(`http://127.0.0.1:5000/compare/${user1}/${user2}`)
-  .then(response => response.json())
-  .then(data => {
+  document.body.innerHTML = `
+    <div style="
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #f9f8f5;
+      color: #1a1a1a;
+      font-family: Inter, sans-serif;
+      letter-spacing: 0.05em;
+    ">
+      no comparison data found
+    </div>
+  `
 
-    if (data.error) {
+  throw new Error("No session data")
 
-      document.body.innerHTML = `
-        <div style="
-          min-height: 100vh;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          background: #f9f8f5;
-          color: #1a1a1a;
-          font-family: Inter, sans-serif;
-          letter-spacing: 0.05em;
-        ">
-          ${data.error}
-        </div>
-      `
+}
 
-      return
-    }
+const data = JSON.parse(savedData)
 
-    const profile1 = data.user1
-    const profile2 = data.user2
+const profile1 = data.user1
+const profile2 = data.user2
 
-    // TOP SCORE AREA
-    document.getElementById("user1-name").textContent =
-      profile1.profile.login
+// TOP SCORE AREA
+document.getElementById("user1-name").textContent =
+  profile1.profile.login
 
-    document.getElementById("user2-name").textContent =
-      profile2.profile.login
+document.getElementById("user2-name").textContent =
+  profile2.profile.login
 
-    // GITHUB LINKS
-    document.getElementById("user1-name").href =
-      profile1.profile.html_url
+// GITHUB LINKS
+document.getElementById("user1-name").href =
+  profile1.profile.html_url
 
-    document.getElementById("user2-name").href =
-      profile2.profile.html_url
+document.getElementById("user2-name").href =
+  profile2.profile.html_url
 
-    // SCORES
-    document.getElementById("user1-score").textContent =
-      profile1.codex_score.toFixed(2)
+// SCORES
+document.getElementById("user1-score").textContent =
+  profile1.codex_score.toFixed(2)
 
-    document.getElementById("user2-score").textContent =
-      profile2.codex_score.toFixed(2)
+document.getElementById("user2-score").textContent =
+  profile2.codex_score.toFixed(2)
 
-    // WINNER
-    document.getElementById("winner-text").textContent =
-      `${data.winner.toUpperCase()} WON.`
+// WINNER
+document.getElementById("winner-text").textContent =
+  `${data.winner.toUpperCase()} WON.`
 
-    // CARDS
-    fillCard(profile1, 1)
-    fillCard(profile2, 2)
+// CARDS
+fillCard(profile1, 1)
+fillCard(profile2, 2)
 
-    // WINNER BORDER
-    if (
-      data.winner.toLowerCase() ===
-      profile1.profile.login.toLowerCase()
-    ) {
+// WINNER BORDER
+if (
+  data.winner.toLowerCase() ===
+  profile1.profile.login.toLowerCase()
+) {
 
-      document.getElementById("card1")
-        .classList.add("card--winner")
+  document.getElementById("card1")
+    .classList.add("card--winner")
 
-    } else {
+} else {
 
-      document.getElementById("card2")
-        .classList.add("card--winner")
+  document.getElementById("card2")
+    .classList.add("card--winner")
 
-    }
-
-  })
-  .catch(error => {
-
-    console.error(error)
-
-    document.body.innerHTML = `
-      <div style="
-        min-height: 100vh;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        background: #f9f8f5;
-        color: #1a1a1a;
-        font-family: Inter, sans-serif;
-        letter-spacing: 0.05em;
-      ">
-        server unavailable
-      </div>
-    `
-
-  })
+}
 
 function fillCard(userData, number) {
 

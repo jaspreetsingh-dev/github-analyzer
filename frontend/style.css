@@ -179,14 +179,8 @@ html, body {
   transform: scale(0.98);
 }
 #status-text {
-  margin-top: 0.8rem;
-
-  min-height: 18px;
-
   font-size: 0.75rem;
   letter-spacing: 0.08em;
-
   color: var(--grey-mid);
-
   text-align: center;
 }
