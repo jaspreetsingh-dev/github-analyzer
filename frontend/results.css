@@ -296,3 +296,20 @@ html, body {
   border-radius: 2px;
   font-family: var(--font-sans);
 }
+
+@media (max-width: 768px) {
+
+  .cards-row {
+    grid-template-columns: 1fr;
+  }
+
+}
+
+@media (max-width: 768px) {
+
+  .back-btn {
+    position: static;
+    margin-bottom: 0.5rem;
+  }
+
+}

@@ -184,3 +184,12 @@ html, body {
   color: var(--grey-mid);
   text-align: center;
 }
+
+@media (max-width: 768px) {
+
+  .heading {
+    font-size: clamp(2.4rem, 12vw, 4rem);
+    letter-spacing: 0.12em;
+  }
+
+}
