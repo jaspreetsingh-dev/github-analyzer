@@ -14,42 +14,11 @@ CORS(app)
 def index():
     return send_from_directory("../frontend", "index.html")
 
-@app.route("/v2")
-def index_v2():
-    return send_from_directory("../frontend", "index_v2.html")
 
 @app.route("/frontend/<path:filename>")
 def frontend_files(filename):
     return send_from_directory("../frontend", filename)
 
-@app.route("/analyze/<username>")
-def analyze_username(username):
-    try:
-        profile = get_user_profile(username)
-
-        if profile.get("message") == "Not Found":
-            if profile["message"] == "API rate limit exceeded":
-                return jsonify({"error": "GitHub API rate limit exceeded. Try again in an hour."}), 429
-            return jsonify({"error": "Username not found"}), 404
-        
-        logging.info(f"Analyzing: {username}")
-        
-        repos = get_repositories(username)
-        stats = calculate_basic_stats(repos)
-        codex_score = calculate_codex_score(profile, repos)
-        summary = generate_summary(profile, repos, stats, codex_score)
-        badges = generate_badges(profile, stats)
-
-        return jsonify({
-            "profile": profile,
-            "stats": stats,
-            "codex_score": codex_score,
-            "summary": summary,
-            "badges": badges
-        })
-    
-    except Exception as e:
-        return jsonify({"error": str(e)}), 500
     
 @app.route("/compare/<username1>/<username2>")
 def compare_users(username1, username2):
@@ -58,9 +27,11 @@ def compare_users(username1, username2):
             return jsonify({"error": "Please enter two different usernames"}), 400
 
         profile = get_user_profile(username1)
+        if profile.get("message") == "API rate limit exceeded":
+            return jsonify({
+                "error": "GitHub API rate limit exceeded. Try again later."
+            }), 429
         if profile.get("message") == "Not Found":
-            if profile["message"] == "API rate limit exceeded":
-                return jsonify({"error": "GitHub API rate limit exceeded. Try again in an hour."}), 429
             return jsonify({"error": "Username not found"}), 404
         
         repos = get_repositories(username1)
@@ -70,6 +41,10 @@ def compare_users(username1, username2):
         badges = generate_badges(profile, stats)
 
         profile2 = get_user_profile(username2)
+        if profile2.get("message") == "API rate limit exceeded":
+            return jsonify({
+                "error": "GitHub API rate limit exceeded. Try again later."
+            }), 429
         if profile2.get("message") == "Not Found":
             return jsonify({"error": "Username not found"}), 404
         

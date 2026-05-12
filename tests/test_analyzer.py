@@ -22,7 +22,6 @@ def test_basic_stats():
 
     print("All tests passed for basic stats")
 
-test_basic_stats()
 
 def test_codex_score_empty_repos():
     fake_profile = {"followers": 444}
@@ -31,7 +30,6 @@ def test_codex_score_empty_repos():
 
     print("All tests passed for codex score")
 
-test_codex_score_empty_repos()
 
 def test_get_star_tier():
     assert get_star_tier(0) == "emerging developer"
@@ -40,7 +38,6 @@ def test_get_star_tier():
 
     print("All tests passed star tier")
 
-test_get_star_tier()
 
 def test_get_account_age():
     assert get_account_age("2010-01-01T00:00:00Z") == "veteran of the community"
@@ -48,7 +45,6 @@ def test_get_account_age():
 
     print("All tests passed account age")
 
-test_get_account_age()
 
 def test_generate_summary_contains_username():
     fake_profile = {"login": "fakeuser", "followers": 444, "created_at": "2010-01-01T00:00:00Z"}
@@ -61,7 +57,6 @@ def test_generate_summary_contains_username():
 
     print("All tests passed for summary")
 
-test_generate_summary_contains_username()
 
 def test_generate_badges_star_collector():
     fake_profile = {"created_at": "2010-01-01T00:00:00Z"}
@@ -71,4 +66,12 @@ def test_generate_badges_star_collector():
 
     print("All tests passed for badges")
 
-test_generate_badges_star_collector()
+
+if __name__ == "__main__":
+
+    test_basic_stats()
+    test_codex_score_empty_repos()
+    test_get_star_tier()
+    test_get_account_age()
+    test_generate_summary_contains_username()
+    test_generate_badges_star_collector()
