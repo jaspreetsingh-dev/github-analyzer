@@ -72,7 +72,7 @@ document.getElementById("analyze-btn")
     try {
 
       const response = await fetch(
-        `http://127.0.0.1:5000/compare/${user1}/${user2}`
+        `/compare/${user1}/${user2}`
       )
 
       const data = await response.json()

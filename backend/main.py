@@ -16,6 +16,8 @@ from summarizer import (
     generate_badges
 )
 
+from storage import upload_report
+
 import logging
 
 logging.basicConfig(level=logging.INFO)
@@ -113,20 +115,18 @@ def compare_users(username1, username2):
 
             return jsonify(user2_data), status2
 
-        return jsonify({
-
+        comparison_report = {
             "user1": user1_data,
-
             "user2": user2_data,
-
             "winner": (
                 username1
                 if user1_data["codex_score"] >
                 user2_data["codex_score"]
                 else username2
             )
-
-        })
+        }
+        upload_report(comparison_report, username1, username2)
+        return jsonify(comparison_report)
 
     except Exception as e:
 

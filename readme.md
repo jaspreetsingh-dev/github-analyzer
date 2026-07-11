@@ -1,10 +1,8 @@
 # GitHub Analyzer
 
-A GitHub profile comparison tool built with Flask, JavaScript, and the GitHub REST API.
+A cloud-enabled GitHub profile comparison application built with Flask, Python, JavaScript, AWS, and the GitHub REST API.
 
-Compare two developers side-by-side through custom scoring, language analysis, repository statistics, and dynamically generated developer summaries.
-
-> to compare — commit histories have become personality traits.
+The application compares two GitHub developers, generates developer insights, calculates a custom Codex Score, and automatically stores comparison reports in Amazon S3 using IAM Roles and Boto3.
 
 ---
 
@@ -12,44 +10,87 @@ Compare two developers side-by-side through custom scoring, language analysis, r
 
 - Compare two GitHub developers side-by-side
 - Dynamic Codex Score system
-- Real-time GitHub API integration
+- GitHub REST API integration
 - Language distribution analysis
-- Total stars, forks, followers, and repository statistics
-- Dynamically generated developer summaries
-- Badge generation system
-- SessionStorage caching for faster rendering and reduced API calls
-- Graceful error handling for invalid usernames and API issues
+- Repository statistics
+- Developer summary generation
+- Badge generation
+- SessionStorage caching
+- Error handling
+- Automatic comparison report storage in Amazon S3
+- IAM Role authentication (no hardcoded AWS credentials)
+
+---
+
+## Architecture
+
+Browser
+
+↓
+
+Flask Application (EC2)
+
+↓
+
+GitHub REST API
+
+↓
+
+Comparison Engine
+
+↓
+
+Boto3
+
+↓
+
+IAM Role
+
+↓
+
+Amazon S3
 
 ---
 
 ## Codex Score Formula
 
-The Codex Score is calculated using a weighted scoring system:
+The Codex Score is calculated using a weighted scoring system.
 
-- Star Power (25%) — total stars earned
-- Community Impact (20%) — followers and forks
-- Repository Consistency (20%) — number of public repositories
-- Documentation Quality (20%) — repositories with descriptions
-- Language Diversity (15%) — number of languages used
+- Star Power (25%)
+- Community Impact (20%)
+- Repository Consistency (20%)
+- Documentation Quality (20%)
+- Language Diversity (15%)
 
-Final score is normalized to a value between 0–100.
+The final score is normalized between 0 and 100.
 
 ---
 
 ## Tech Stack
 
 ### Backend
+
 - Python
 - Flask
 - Requests
 - Flask-CORS
+- Boto3
 
 ### Frontend
+
 - HTML
 - CSS
 - Vanilla JavaScript
 
+### Cloud
+
+- Amazon EC2
+- Amazon S3
+- IAM Roles
+- Amazon VPC
+
 ### API
+
 - GitHub REST API
 
 ---
@@ -63,7 +104,8 @@ project/
 │   ├── main.py
 │   ├── analyzer.py
 │   ├── summarizer.py
-│   └── github_client.py
+│   ├── github_client.py
+│   └── storage.py
 │
 ├── frontend/
 │   ├── index.html
@@ -82,10 +124,24 @@ project/
 └── requirements.txt
 ```
 
-## How To Run
+---
+
+## Environment Variables
+
+Create a `.env` file in the project root.
+
+```env
+GITHUB_TOKEN=your_github_token
+S3_BUCKET=your_bucket_name
+```
+
+---
+
+## Running Locally
 
 ```bash
 git clone <repo-url>
+
 cd github-analyzer
 
 python -m venv venv
@@ -97,14 +153,20 @@ pip install -r requirements.txt
 python backend/main.py
 ```
 
-Create a `.env` file in the project root:
+Open:
 
-```env
-GITHUB_TOKEN=your_github_token
 ```
-
-Then open:
-
-```text
 http://127.0.0.1:5000
 ```
+
+---
+
+## AWS Deployment Notes
+
+The cloud version of the project was deployed using:
+
+- Amazon EC2
+- IAM Role for secure AWS authentication
+- Amazon S3 for report storage
+
+AWS credentials are **not** stored inside the application. The application authenticates to AWS using an IAM Role attached to the EC2 instance.
