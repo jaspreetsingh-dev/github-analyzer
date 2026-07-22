@@ -67,3 +67,11 @@ resource "aws_iam_role_policy_attachment" "github_analyzer_attach" {
   policy_arn = aws_iam_policy.github_analyzer_s3_policy.arn
 
 }
+
+resource "aws_iam_instance_profile" "github_analyzer_profile" {
+
+  name = "github-analyzer-profile"
+
+  role = aws_iam_role.github_analyzer_role.name
+
+}
