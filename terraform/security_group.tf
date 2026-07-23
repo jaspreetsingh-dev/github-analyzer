@@ -11,7 +11,7 @@ resource "aws_security_group" "github_analyzer_sg" {
 
     protocol = "tcp"
 
-    cidr_blocks = ["0.0.0.0/0"]
+    cidr_blocks = ["38.137.56.114/32"]
   }
 
   ingress {

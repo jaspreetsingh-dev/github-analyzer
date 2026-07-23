@@ -20,7 +20,7 @@ resource "aws_iam_policy" "github_analyzer_s3_policy" {
 
         ]
 
-        Resource = "*"
+        Resource = "${aws_s3_bucket.github_analyzer_reports.arn}/*"
 
       }
 
