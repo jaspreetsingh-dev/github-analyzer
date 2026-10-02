@@ -64,72 +64,13 @@ The final score is normalized between 0 and 100.
 
 ## Tech Stack
 
-### Backend
+**Backend:** Python, Flask, Requests, Flask-CORS, Boto3
 
-* Python
-* Flask
-* Requests
-* Flask-CORS
-* Boto3
+**Frontend:** HTML, CSS, Vanilla JavaScript
 
-### Frontend
+**Cloud:** Amazon EC2, Amazon S3, IAM Roles, Default VPC and Security Groups, Terraform
 
-* HTML
-* CSS
-* Vanilla JavaScript
-
-### Cloud
-
-* Amazon EC2
-* Amazon S3
-* IAM Roles
-* Default VPC and Security Groups
-* Terraform
-
-### API
-
-* GitHub REST API
-
----
-
-## Project Structure
-
-```text
-project/
-│
-├── backend/
-│   ├── main.py
-│   ├── analyzer.py
-│   ├── summarizer.py
-│   ├── github_client.py
-│   └── storage.py
-│
-├── frontend/
-│   ├── index.html
-│   ├── results.html
-│   ├── style.css
-│   ├── results.css
-│   ├── results.js
-│   └── bg.png
-│
-├── tests/
-│   └── test_analyzer.py
-│
-├── terraform/
-│   ├── providers.tf
-│   ├── variables.tf
-│   ├── terraform.tfvars  # create locally, not committed
-│   ├── ec2.tf
-│   ├── iam.tf
-│   ├── s3.tf
-│   ├── security_group.tf
-│   └── outputs.tf
-│
-├── .env  # create locally, not committed
-├── .gitignore
-├── README.md
-└── requirements.txt
-```
+**API:** GitHub REST API
 
 ---
 
@@ -180,11 +121,13 @@ http://127.0.0.1:5000
 
 ---
 
-## Terraform Configuration
+## Deployment
 
-Create a `terraform.tfvars` file inside the `terraform` directory.
+Terraform provisions an EC2 instance, an S3 bucket, an IAM Role and a Security Group in the default VPC.
 
-Configure the following values before deployment:
+The application runs on the EC2 instance with the IAM Role attached, which allows it to upload comparison reports to Amazon S3 using Boto3. AWS credentials are never stored inside the application.
+
+Create a `terraform.tfvars` file inside the `terraform` directory:
 
 ```hcl
 aws_region    = "your-region"
@@ -201,7 +144,7 @@ terraform plan
 terraform apply
 ```
 
-Tear it down when finished:
+Tear it down:
 
 ```bash
 terraform destroy
@@ -209,34 +152,6 @@ terraform destroy
 
 ---
 
-## AWS Deployment Notes
-
-The cloud infrastructure for this project is provisioned using Terraform.
-
-Infrastructure includes:
-
-* Amazon EC2
-* Amazon S3
-* IAM Roles
-* Security Groups (default VPC)
-
-The application runs on an EC2 instance with an IAM Role attached, allowing it to upload comparison reports securely to Amazon S3 using Boto3.
-
-AWS credentials are **never stored** inside the application. Authentication is performed automatically through the IAM Role attached to the EC2 instance.
-
----
-
 ## Status
 
 The application was deployed on AWS EC2. It is not currently running. Screenshots are in the LinkedIn Featured section.
-
----
-
-## Future Improvements
-
-* CloudWatch log integration
-* Automated infrastructure deployment
-* CI/CD pipeline with AWS CodePipeline
-* Docker-based deployment
-* HTTPS support
-* Production monitoring and alerts
