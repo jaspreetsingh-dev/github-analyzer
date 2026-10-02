@@ -118,14 +118,14 @@ project/
 ├── terraform/
 │   ├── providers.tf
 │   ├── variables.tf
-│   ├── terraform.tfvars
+│   ├── terraform.tfvars  # create locally, not committed
 │   ├── ec2.tf
 │   ├── iam.tf
 │   ├── s3.tf
 │   ├── security_group.tf
 │   └── outputs.tf
 │
-├── .env
+├── .env  # create locally, not committed
 ├── .gitignore
 ├── README.md
 └── requirements.txt
