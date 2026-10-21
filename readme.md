@@ -155,3 +155,9 @@ terraform destroy
 ## Status
 
 The application was deployed on AWS EC2. It is not currently running. Screenshots are in the LinkedIn Featured section.
+
+## Screenshots
+
+![Application interface](docs/frontend.png)
+
+![Analysis results](docs/result.png)
